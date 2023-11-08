@@ -16,6 +16,7 @@ public class ProductDTO {
     private String description;
     private LocalDate fromDate;
     private LocalDate toDate;
+    private String category;
     private Set<PhotoDTO> photos = new HashSet<>();
 
 

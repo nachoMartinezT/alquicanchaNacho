@@ -6,7 +6,12 @@ import com.alquicancha.repositories.IProductRepository;
 import com.alquicancha.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -29,9 +34,9 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public  ProductDTO register(String name, String description, LocalDate fromDate, LocalDate toDate) {
+    public  ProductDTO register(String name, String description, LocalDate fromDate, LocalDate toDate, String category) {
 
-        Product product = new Product(name, description, fromDate, toDate);
+        Product product = new Product(name, description, fromDate, toDate, category);
         productRepository.save(product);
 
         ProductDTO productDTO = new ProductDTO(product);
@@ -54,6 +59,31 @@ public class ProductServiceImpl implements IProductService{
             productToUpdate.setToDate(product.getToDate());
             productRepository.save(productToUpdate);
             return new ProductDTO(productToUpdate);
-
     }
+
+    public void uploadProductImage(Long productId, MultipartFile photo) throws IOException {
+        // Create a folder to store the photos
+        String photosDir = "./src/main/resources/static/photos";
+        File photosDirFile = new File(photosDir);
+        if (!photosDirFile.exists()) {
+            photosDirFile.mkdirs();
+        }
+
+        // Get the file from the request
+        String fileName = photo.getOriginalFilename();
+        byte[] bytes = photo.getBytes();
+
+        // Write the file to the directory
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(photosDir, fileName));
+        fileOutputStream.write(bytes);
+        fileOutputStream.close();
+
+        // Associate the photo with the product
+        Product product = productRepository.findById(productId).orElse(null);
+        Photo photoObj = new Photo();
+        photoObj.setUrl(fileName);
+        product.getPhotos().add(photoObj);
+        productRepository.save(product);
+    }
+
 }

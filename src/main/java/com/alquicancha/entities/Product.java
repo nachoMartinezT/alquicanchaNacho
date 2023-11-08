@@ -17,6 +17,7 @@ public class Product {
     private String description;
     private LocalDate fromDate;
     private LocalDate toDate;
+    private String category;
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Photo> photos = new HashSet<>();
 
@@ -24,11 +25,12 @@ public class Product {
 
     }
 
-    public Product(String name, String description, LocalDate fromDate, LocalDate toDate) {
+    public Product(String name, String description, LocalDate fromDate, LocalDate toDate, String category) {
         this.name = name;
         this.description = description;
         this.fromDate = fromDate;
         this.toDate = toDate;
+        this.category = category;
     }
 
     public void addPhoto(Photo photo){

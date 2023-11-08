@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import java.util.Set;
@@ -39,8 +41,8 @@ public class ProductController {
 
     @PostMapping("/products/register")
     public ResponseEntity<Object> register(@RequestParam String name,@RequestParam String description,
-                                           @RequestParam LocalDate fromDate,@RequestParam LocalDate toDate){
-         productService.register(name, description, fromDate, toDate);
+                                           @RequestParam LocalDate fromDate,@RequestParam LocalDate toDate,@RequestParam String category){
+         productService.register(name, description, fromDate, toDate,category);
 
          return ResponseEntity.ok("Product created");
     }
@@ -58,5 +60,13 @@ public class ProductController {
 
         return ResponseEntity.ok("Product deleted");
     }
+
+    @PostMapping("/products/{productId}/upload")
+    public ResponseEntity<Object> uploadProductImage(@PathVariable Long productId, @RequestParam("photo") MultipartFile photo) throws IOException {
+        productService.uploadProductImage(productId, photo);
+
+        return ResponseEntity.ok("Photo uploaded successfully");
+    }
+
 
 }
