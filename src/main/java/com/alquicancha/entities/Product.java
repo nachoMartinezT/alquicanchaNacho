@@ -87,13 +87,25 @@ public class Product {
     }
 
     public void addPhoto(Photo photo){
-        photo.setProduct(this);
-        this.photos.add(photo);
+        if (photo != null && !photos.contains(photo)) {
+            photos.add(photo);
+            photo.setProduct(this);
+        }
     }
 
     public void removePhoto(Photo photo){
-        this.photos.remove(photo);
+        if (photo != null) {
+            photos.remove(photo);
+            photo.setProduct(null);
+        }
     }
+
+
+
+    public int getNumberOfPhotos() {
+        return photos.size();
+    }
+
 
     @Override
     public String toString() {

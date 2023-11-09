@@ -20,5 +20,9 @@ public interface IProductService {
 
     Set<Photo> getPhotos(Long productId);
 
+    int getPhotosCount(Long productId);
+
+    void deletePhoto(Long productId, Long photoId);
+
 
 }

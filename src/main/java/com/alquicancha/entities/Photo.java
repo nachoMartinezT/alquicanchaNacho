@@ -71,7 +71,7 @@ public class Photo {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
-                ", product=" + product +
+                ", product_id=" + (product != null ? product.getId() : null) +
                 '}';
     }
 }

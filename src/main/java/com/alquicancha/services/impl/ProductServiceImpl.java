@@ -88,6 +88,7 @@ public class ProductServiceImpl implements IProductService{
         // Associate the photo with the product
 
         Product product = productRepository.findById(productId).orElse(null);
+
         Photo photoo = new Photo(fileName, "/photos/" + fileName, "Photo of " + product.getName());
         Photo photoObj = photoRepository.save(photoo);
 
@@ -101,6 +102,20 @@ public class ProductServiceImpl implements IProductService{
     public Set<Photo> getPhotos(Long productId){
         Product product = productRepository.findById(productId).orElse(null);
         return product.getPhotos();
+    }
+
+    @Override
+    public int getPhotosCount(Long productId){
+        Product product = productRepository.findById(productId).orElse(null);
+        return product.getPhotos().size();
+    }
+
+    @Override
+    public void deletePhoto(Long productId, Long photoId){
+        Product product = productRepository.findById(productId).orElse(null);
+        Photo photo = photoRepository.findById(photoId).orElse(null);
+        product.removePhoto(photo);
+        productRepository.save(product);
     }
 
 }

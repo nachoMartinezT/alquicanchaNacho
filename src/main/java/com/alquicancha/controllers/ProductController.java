@@ -79,6 +79,7 @@ public class ProductController {
     @PostMapping("/products/{productId}/upload")
     @ApiResponse(responseCode = "200", description = "Photo uploaded successfully")
     public ResponseEntity<Object> uploadProductImage(@PathVariable Long productId, @RequestParam("photo") MultipartFile photo) throws IOException {
+        System.out.printf(productId.toString());
         productService.uploadProductImage(productId, photo);
 
         return ResponseEntity.ok("Photo uploaded successfully");
@@ -89,6 +90,20 @@ public class ProductController {
     public ResponseEntity<Object> getPhotos(@PathVariable Long productId){
         Set<Photo> photos = productService.getPhotos(productId);
         return ResponseEntity.ok(photos);
+    }
+
+    @Operation(summary = "Get the number of photos from a product")
+    @GetMapping("/products/{productId}/photos/count")
+    public ResponseEntity<Object> getPhotosCount(@PathVariable Long productId){
+        int photosCount = productService.getPhotosCount(productId);
+        return ResponseEntity.ok(photosCount);
+    }
+
+    @Operation(summary = "Delete a photo from a product")
+    @DeleteMapping("/products/{productId}/photos/{photoId}")
+    public ResponseEntity<Object> deletePhoto(@PathVariable Long productId, @PathVariable Long photoId){
+        productService.deletePhoto(productId, photoId);
+        return ResponseEntity.ok("Photo deleted");
     }
 
 
