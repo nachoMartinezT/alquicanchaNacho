@@ -19,6 +19,7 @@ public class Product {
     private LocalDate toDate;
     private String category;
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @Column(name="photos")
     private Set<Photo> photos = new HashSet<>();
 
     public Product(){
@@ -31,6 +32,7 @@ public class Product {
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.category = category;
+        this.photos = new HashSet<>();
     }
 
     public void addPhoto(Photo photo){

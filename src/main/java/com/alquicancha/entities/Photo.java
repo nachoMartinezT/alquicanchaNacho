@@ -13,7 +13,6 @@ public class Photo {
     private String url;
     private String description;
     @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
     public Photo() {

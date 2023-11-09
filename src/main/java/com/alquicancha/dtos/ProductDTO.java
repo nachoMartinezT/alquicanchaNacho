@@ -30,6 +30,7 @@ public class ProductDTO {
         this.description = product.getDescription();
         this.fromDate = product.getFromDate();
         this.toDate = product.getToDate();
+        this.category = product.getCategory();
         this.photos = product.getPhotos().stream().map(PhotoDTO::new).collect(Collectors.toSet());
     }
 }

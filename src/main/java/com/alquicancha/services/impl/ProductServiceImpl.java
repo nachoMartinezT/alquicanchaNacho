@@ -2,6 +2,7 @@ package com.alquicancha.services.impl;
 import com.alquicancha.dtos.ProductDTO;
 import com.alquicancha.entities.Photo;
 import com.alquicancha.entities.Product;
+import com.alquicancha.repositories.IPhotoRepository;
 import com.alquicancha.repositories.IProductRepository;
 import com.alquicancha.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.util.Set;
 public class ProductServiceImpl implements IProductService{
     @Autowired
     IProductRepository productRepository;
+    @Autowired
+    IPhotoRepository photoRepository;
 
 
     @Override
@@ -57,6 +60,7 @@ public class ProductServiceImpl implements IProductService{
             productToUpdate.setDescription(product.getDescription());
             productToUpdate.setFromDate(product.getFromDate());
             productToUpdate.setToDate(product.getToDate());
+            productToUpdate.setCategory(product.getCategory());
             productRepository.save(productToUpdate);
             return new ProductDTO(productToUpdate);
     }
@@ -81,8 +85,11 @@ public class ProductServiceImpl implements IProductService{
         // Associate the photo with the product
         Product product = productRepository.findById(productId).orElse(null);
         Photo photoObj = new Photo();
-        photoObj.setUrl(fileName);
-        product.getPhotos().add(photoObj);
+        photoObj.setName(fileName);
+        photoObj.setUrl("./src/main/resources/static/photos/"+fileName);
+        product.addPhoto(photoObj);
+        photoRepository.save(photoObj);
+
         productRepository.save(product);
     }
 
