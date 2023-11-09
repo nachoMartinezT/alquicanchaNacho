@@ -7,6 +7,6 @@ public interface IPhotoService {
     PhotoDTO findById(Long id);
     PhotoDTO register(String name, String url, String description);
     void delete(Long id);
-    PhotoDTO update(Photo photo);
+    PhotoDTO editPhoto(Long productId,Long photoId, Photo photo);
 
 }

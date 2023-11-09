@@ -3,6 +3,7 @@ package com.alquicancha.controllers;
 import com.alquicancha.dtos.ProductDTO;
 import com.alquicancha.entities.Photo;
 import com.alquicancha.entities.Product;
+import com.alquicancha.services.IPhotoService;
 import com.alquicancha.services.IProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,6 +26,8 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+    private IPhotoService photoService;
 
     @Operation(summary = "Get all products")
     @GetMapping("/products")
@@ -104,6 +107,13 @@ public class ProductController {
     public ResponseEntity<Object> deletePhoto(@PathVariable Long productId, @PathVariable Long photoId){
         productService.deletePhoto(productId, photoId);
         return ResponseEntity.ok("Photo deleted");
+    }
+
+    @Operation(summary = "Edit photo from a product")
+    @PutMapping("/products/{productId}/photos/{photoId}")
+    public ResponseEntity<Object> editPhoto(@PathVariable Long productId, @PathVariable Long photoId, @RequestBody Photo photo){
+        photoService.editPhoto(productId, photoId, photo);
+        return ResponseEntity.ok("Photo edited");
     }
 
 

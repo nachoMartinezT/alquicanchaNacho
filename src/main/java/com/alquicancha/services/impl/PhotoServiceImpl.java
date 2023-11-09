@@ -33,9 +33,13 @@ public class PhotoServiceImpl implements IPhotoService {
     }
 
     @Override
-    public PhotoDTO update(Photo photo){
-        photoRepository.save(photo);
-        PhotoDTO photoDTO = new PhotoDTO(photo);
+    public PhotoDTO editPhoto(Long productId,Long photoId, Photo photo){
+        Photo findPhoto = photoRepository.findById(photoId).orElse(null);
+        findPhoto.setName(photo.getName());
+        findPhoto.setUrl(photo.getUrl());
+        findPhoto.setDescription(photo.getDescription());
+        photoRepository.save(findPhoto);
+        PhotoDTO photoDTO = new PhotoDTO(findPhoto);
         return photoDTO;
     }
 }
