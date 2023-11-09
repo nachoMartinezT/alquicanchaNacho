@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+
 @Entity
 public class Product {
     @Id
@@ -19,7 +19,6 @@ public class Product {
     private LocalDate toDate;
     private String category;
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    @Column(name="photos")
     private Set<Photo> photos = new HashSet<>();
 
     public Product(){
@@ -35,6 +34,58 @@ public class Product {
         this.photos = new HashSet<>();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Set<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
+    }
+
     public void addPhoto(Photo photo){
         photo.setProduct(this);
         this.photos.add(photo);
@@ -43,4 +94,19 @@ public class Product {
     public void removePhoto(Photo photo){
         this.photos.remove(photo);
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", category='" + category + '\'' +
+                ", photos=" + photos +
+                '}';
+    }
 }
+
+

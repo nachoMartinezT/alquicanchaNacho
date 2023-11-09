@@ -4,6 +4,7 @@ import com.alquicancha.entities.Photo;
 import com.alquicancha.entities.Product;
 import com.alquicancha.repositories.IPhotoRepository;
 import com.alquicancha.repositories.IProductRepository;
+import com.alquicancha.services.IPhotoService;
 import com.alquicancha.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ import java.util.Set;
 public class ProductServiceImpl implements IProductService{
     @Autowired
     IProductRepository productRepository;
+    @Autowired
+    IPhotoService photoService;
     @Autowired
     IPhotoRepository photoRepository;
 
@@ -83,14 +86,21 @@ public class ProductServiceImpl implements IProductService{
         fileOutputStream.close();
 
         // Associate the photo with the product
+
         Product product = productRepository.findById(productId).orElse(null);
-        Photo photoObj = new Photo();
-        photoObj.setName(fileName);
-        photoObj.setUrl("./src/main/resources/static/photos/"+fileName);
+        Photo photoo = new Photo(fileName, "/photos/" + fileName, "Photo of " + product.getName());
+        Photo photoObj = photoRepository.save(photoo);
+
         product.addPhoto(photoObj);
-        photoRepository.save(photoObj);
 
         productRepository.save(product);
+        System.out.println("Product photos: " + product.getPhotos());
+    }
+
+    @Override
+    public Set<Photo> getPhotos(Long productId){
+        Product product = productRepository.findById(productId).orElse(null);
+        return product.getPhotos();
     }
 
 }

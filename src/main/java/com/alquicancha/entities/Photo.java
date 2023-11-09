@@ -3,7 +3,7 @@ package com.alquicancha.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
+
 @Entity
 public class Photo {
     @Id
@@ -12,7 +12,8 @@ public class Photo {
     private String name;
     private String url;
     private String description;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public Photo() {
@@ -24,5 +25,53 @@ public class Photo {
     }
 
     public Photo(Photo photo) {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", description='" + description + '\'' +
+                ", product=" + product +
+                '}';
     }
 }

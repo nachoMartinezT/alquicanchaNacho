@@ -18,5 +18,7 @@ public interface IProductService {
     ProductDTO update(Product product);
     void uploadProductImage(Long productId, MultipartFile photo) throws IOException;
 
+    Set<Photo> getPhotos(Long productId);
+
 
 }

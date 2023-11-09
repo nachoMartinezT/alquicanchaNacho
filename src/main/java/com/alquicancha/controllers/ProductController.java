@@ -1,6 +1,7 @@
 package com.alquicancha.controllers;
 
 import com.alquicancha.dtos.ProductDTO;
+import com.alquicancha.entities.Photo;
 import com.alquicancha.entities.Product;
 import com.alquicancha.services.IProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -81,6 +82,13 @@ public class ProductController {
         productService.uploadProductImage(productId, photo);
 
         return ResponseEntity.ok("Photo uploaded successfully");
+    }
+
+    @Operation(summary = "Get all photos from a product")
+    @GetMapping("/products/{productId}/photos")
+    public ResponseEntity<Object> getPhotos(@PathVariable Long productId){
+        Set<Photo> photos = productService.getPhotos(productId);
+        return ResponseEntity.ok(photos);
     }
 
 

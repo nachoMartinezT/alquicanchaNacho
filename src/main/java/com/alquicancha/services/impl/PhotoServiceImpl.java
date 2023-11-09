@@ -1,5 +1,6 @@
 package com.alquicancha.services.impl;
 
+import com.alquicancha.dtos.PhotoDTO;
 import com.alquicancha.entities.Photo;
 import com.alquicancha.repositories.IPhotoRepository;
 import com.alquicancha.services.IPhotoService;
@@ -12,17 +13,18 @@ public class PhotoServiceImpl implements IPhotoService {
     private IPhotoRepository photoRepository;
 
     @Override
-    public Photo findById(Long id){
-        return photoRepository.findById(id).orElse(null);
+    public PhotoDTO findById(Long id){
+        Photo findPhoto = photoRepository.findById(id).orElse(null);
+        PhotoDTO photoDTO = new PhotoDTO(findPhoto);
+        return photoDTO;
     }
 
     @Override
-    public Photo register(String name, String url, String description){
-        Photo photo = new Photo();
-        photo.setName(name);
-        photo.setUrl(url);
-        photo.setDescription(description);
-        return photoRepository.save(photo);
+    public PhotoDTO register(String name, String url, String description){
+        Photo photo = new Photo(name, url, description);
+        photoRepository.save(photo);
+        PhotoDTO photoDTO = new PhotoDTO(photo);
+        return photoDTO;
     }
 
     @Override
@@ -31,11 +33,9 @@ public class PhotoServiceImpl implements IPhotoService {
     }
 
     @Override
-    public Photo update(Photo photo){
-        photo.setName(photo.getName());
-        photo.setUrl(photo.getUrl());
-        photo.setDescription(photo.getDescription());
-
-        return photoRepository.save(photo);
+    public PhotoDTO update(Photo photo){
+        photoRepository.save(photo);
+        PhotoDTO photoDTO = new PhotoDTO(photo);
+        return photoDTO;
     }
 }
