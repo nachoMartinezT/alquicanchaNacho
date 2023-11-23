@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +15,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private double price;
     private String description;
     private LocalDate fromDate;
     private LocalDate toDate;
-    private String category;
+    @ElementCollection
+    private Set<String> category;
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Photo> photos = new HashSet<>();
 
@@ -25,7 +28,7 @@ public class Product {
 
     }
 
-    public Product(String name, String description, LocalDate fromDate, LocalDate toDate, String category) {
+    public Product(String name, double price, String description, LocalDate fromDate, LocalDate toDate, Set<String> category) {
         this.name = name;
         this.description = description;
         this.fromDate = fromDate;
@@ -70,12 +73,12 @@ public class Product {
         this.toDate = toDate;
     }
 
-    public String getCategory() {
+    public Set<String> getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category = Collections.singleton(category);
     }
 
     public Set<Photo> getPhotos() {

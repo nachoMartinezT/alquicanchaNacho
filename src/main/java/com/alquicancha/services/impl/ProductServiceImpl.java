@@ -40,9 +40,9 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public  ProductDTO register(String name, String description, LocalDate fromDate, LocalDate toDate, String category) {
+    public  ProductDTO register(String name, double price, String description, LocalDate fromDate, LocalDate toDate, Set<String> category) {
 
-        Product product = new Product(name, description, fromDate, toDate, category);
+        Product product = new Product(name, price, description, fromDate, toDate, category);
         productRepository.save(product);
 
         ProductDTO productDTO = new ProductDTO(product);

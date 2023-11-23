@@ -50,9 +50,9 @@ public class ProductController {
 
     @Operation(summary = "Register a product")
     @PostMapping("/products/register")
-    public ResponseEntity<Object> register(@RequestParam String name,@RequestParam String description,
-                                           @RequestParam LocalDate fromDate,@RequestParam LocalDate toDate,@RequestParam String category){
-         productService.register(name, description, fromDate, toDate,category);
+    public ResponseEntity<Object> register(@RequestParam String name,@RequestParam double price, @RequestParam String description,
+                                           @RequestParam LocalDate fromDate,@RequestParam LocalDate toDate,@RequestParam Set<String> category){
+         productService.register(name, price, description, fromDate, toDate,category);
 
          return ResponseEntity.ok("Product created");
     }

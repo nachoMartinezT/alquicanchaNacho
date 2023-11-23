@@ -13,7 +13,7 @@ import java.util.Set;
 public interface IProductService {
     Set<ProductDTO> findAll();
     ProductDTO findById(Long id);
-    ProductDTO register(String name, String description, LocalDate fromDate, LocalDate toDate, String category);
+    ProductDTO register(String name, double price, String description, LocalDate fromDate, LocalDate toDate, Set<String> category);
     void delete(Long id);
     ProductDTO update(Product product);
     void uploadProductImage(Long productId, MultipartFile photo) throws IOException;
